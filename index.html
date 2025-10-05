@@ -546,10 +546,14 @@
     const gifts = [
       "Đi Ăn Mỳ Kay 🍜",
       "Được Anh Yêu Hôn 100 Cái 😘",
-      "Tặng Cho Anh Hoàng Lồng Đèn 🏮",
+      "Cưng Tặng Cho Anh Một Cái Lồng Đèn Hehe 🏮",
       "100 Cành 🌸",
       "Được Đi Chơi 🎡"
-    ];
+    ];// 👉 Xáo trộn túi mù khi load trang
+window.addEventListener("load", () => {
+  if (document.getElementById("bags")) renderBags();
+});
+
 
     function attemptLogin() {
       const user = document.getElementById('username').value.trim();
@@ -582,17 +586,38 @@
       }
     }
 
-    function showLucky(){ hideAll(); luckyCard.classList.remove('hidden'); }
+    function showLucky(){
+  hideAll();
+  luckyCard.classList.remove('hidden');
+  renderBags(); // 👉 tự động xáo trộn mỗi khi mở trang
+}
+
     function showReward(){ hideAll(); rewardCard.classList.remove('hidden'); }
 
-    // Tạo các bánh
-    gifts.forEach((g,i)=>{
-      const div=document.createElement('div');
-      div.className='bag';
-      div.innerHTML=`<img src="banhtt.png" alt="Bánh Trung Thu">`;
-      div.onclick=()=>openGift(i,div);
-      bagsContainer.appendChild(div);
-    });
+// 🔄 Hàm tạo túi mù (bánh) với xáo trộn ngẫu nhiên
+function renderBags() {
+  const bagsContainer = document.getElementById("bags");
+  if (!bagsContainer) return;
+
+  // Reset khu vực bánh
+  bagsContainer.innerHTML = "";
+
+  // Xáo trộn danh sách bánh
+  const shuffledGifts = [...gifts].sort(() => Math.random() - 0.5);
+
+  shuffledGifts.forEach((g, i) => {
+    const div = document.createElement("div");
+    div.className = "bag";
+    div.innerHTML = `<img src="banhtt.png" alt="Bánh Trung Thu">`;
+    div.onclick = () => openGift(i, div);
+    bagsContainer.appendChild(div);
+  });
+
+  // Reset trạng thái
+  opened = [false, false, false, false, false];
+  openedCount = 0;
+  document.getElementById("giftText").innerText = "Chọn một bánh để nhận quà 🎑";
+}
 
     function openGift(index,element){
       if (openedCount >= 3 && !opened[index]) {
