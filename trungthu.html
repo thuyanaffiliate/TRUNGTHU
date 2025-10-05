@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <link rel="icon" type="image/x-icon" href="banhtt.png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trung Thu 2 TA🎑</title>
+  <style>
+    :root {
+      --bg1: #0f172a;
+      --bg2: #4b1d3f;
+      --accent1: #ffd700;
+      --accent2: #ff8a00;
+      --card-bg: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,200,0,0.45);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 70%, #081029 100%);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      display: none;
+      justify-content: center;
+      gap: 36px;
+      padding: 14px 18px;
+      background: linear-gradient(90deg,#3b0a2e,#5e1742);
+      border-bottom: 2px solid rgba(255,215,0,0.18);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .navbar a {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--accent1);
+      text-shadow: 0 0 8px rgba(255,140,0,0.6);
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+    .navbar a:hover {
+      color: #ff6b32;
+      transform: scale(1.1);
+      text-shadow: 0 0 14px #ff4500, 0 0 22px #ffd700;
+    }
+
+    .page { max-width: 1100px; margin: 28px auto; padding: 0 20px 60px; }
+    .center { display:flex; align-items:center; justify-content:center; min-height: calc(100vh - 120px); }
+
+    .card {
+      max-width: 760px;
+      background: var(--card-bg);
+      border-radius: 18px;
+      border: 1.5px solid var(--glass-border);
+      padding: 28px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    }
+
+    h1 { margin: 0 0 8px; font-size: 28px; color: var(--accent1); text-shadow: 0 0 12px rgba(255,200,0,0.35); }
+    .subtitle { color: #ffd6a5; margin-bottom: 18px; }
+
+    .input {
+      width: 100%; padding: 12px 14px; margin-bottom: 10px;
+      border-radius: 10px; border: 1px solid rgba(255,215,0,0.12);
+      background: rgba(255,255,255,0.03);
+      color: #fff; font-size: 15px;
+    }
+
+    .btn {
+      width: 100%; padding: 11px 18px;
+      border-radius: 10px; border: none;
+      font-weight: 700; font-size: 15px;
+      background: linear-gradient(90deg,var(--accent2),#ffcc00);
+      color: #1b1b1b; cursor: pointer;
+      transition: all .2s ease;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 0 15px #ffd700; }
+
+    .check-wrap { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+    .check {
+      width: 20px; height: 20px; border: 2px solid rgba(255,215,0,0.3); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .check.checked { background: linear-gradient(90deg,#ff9a00,#ffd700); border-color: #ffd700; }
+    .check svg { width: 14px; height: 14px; opacity: 0; }
+    .check.checked svg { opacity: 1; }
+
+    .msg { color: #ffb4b4; font-size: 14px; margin-top: 6px; }
+
+    .big-title { font-size: 26px; color: var(--accent1); margin-bottom: 10px; text-shadow: 0 0 12px rgba(255,200,0,0.3); }
+    .gift-box { background: rgba(255,255,255,0.05); padding: 16px; border-radius: 12px; margin-top: 10px; }
+
+    .bags {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .bag {
+      width: 120px;
+      height: 120px;
+      cursor: pointer;
+      transition: transform 0.3s, filter 0.3s;
+      position: relative;
+    }
+    .bag img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+    .bag:hover {
+      transform: scale(1.15) rotate(-5deg);
+      filter: drop-shadow(0 0 15px gold);
+    }
+    .bag.opened::after {
+      content: "ĐÃ BÓC";
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-10deg);
+      background: rgba(0,0,0,0.6);
+      color: #ff3333;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 8px;
+      text-shadow: 0 0 10px #ff0000, 0 0 20px #ff4d4d;
+      font-size: 18px;
+    }
+
+    .reward-popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      animation: fadeIn .4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+
+    .reward-box {
+      background: radial-gradient(circle, #fff7c0, #ffe182, #ffb347);
+      border: 2px solid gold;
+      padding: 30px 50px;
+      border-radius: 20px;
+      color: #1b1b1b;
+      text-align: center;
+      box-shadow: 0 0 30px gold;
+      animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.3) rotate(-20deg); opacity: 0; }
+      80% { transform: scale(1.05) rotate(5deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0); }
+    }
+
+    .hidden { display: none !important; }
+    /* Hiệu ứng ảnh bay lung linh */
+.floating-img {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 1;
+  animation: floatUp linear forwards;
+  filter: drop-shadow(0 0 10px gold) drop-shadow(0 0 20px #ffb347);
+  border-radius: 50%;
+  border: 2px solid rgba(255,215,0,0.7);
+  background: rgba(255,255,255,0.08);
+  object-fit: contain;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+}
+:root{
+    --bg1:#071026;
+    --bg2:#3b1030;
+    --accent1:#ffd700;
+    --accent2:#ff8a00;
+    --card-bg: rgba(255,255,255,0.05);
+  }
+
+  body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    color:#fff;
+    background:linear-gradient(180deg,var(--bg1),var(--bg2));
+    overflow-x:hidden;
+  }
+
+  header, main, footer{
+    max-width:1100px;
+    margin:auto;
+    padding:10px 20px;
+  }
+
+  .card{
+    background:var(--card-bg);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:16px;
+    padding:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    transition:transform 0.3s;
+  }
+  .card:hover{transform:scale(1.02);}
+
+  /* Responsive */
+  @media (max-width:768px){
+    header,main,footer{padding:10px;}
+    .card{padding:12px;}
+    h1{font-size:1.4rem;}
+    p{font-size:0.95rem;}
+  }
+  @media (min-width:769px){
+    h1{font-size:2rem;}
+    p{font-size:1.1rem;}
+  }
+  </style>
+</head>
+<body>
+  <div class="navbar" id="navbar">
+    <a onclick="showHome()">🏠 Trang chủ</a>
+    <a onclick="showLucky()">🎁 Bóc Túi Mù</a>
+    <a onclick="showReward()">🏮 Nhận Thưởng</a>
+  </div>
+
+  <div class="page">
+    <div class="center">
+      <!-- Đăng nhập -->
+      <div id="loginCard" class="card">
+        <h1>🌕 Đăng Nhập Để Vào Thế Giới Này</h1>
+        <div class="subtitle">Nhập đúng tài khoản để tham gia sự kiện</div>
+        <input id="username" class="input" placeholder="Tên đăng nhập" />
+        <input id="password" type="password" class="input" placeholder="Mật khẩu" />
+
+        <div class="check-wrap">
+          <div id="robotBox" class="check">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M20 6L9 17l-5-5" stroke="#1b1b1b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span>Tôi không phải robot 🤖</span>
+        </div>
+
+        <button class="btn" onclick="attemptLogin()">Đăng nhập</button>
+        <div id="errMsg" class="msg hidden"></div>
+      </div>
+
+      <!-- Trang chủ -->
+      <div id="homeCard" class="card hidden">
+        <div class="big-title">🏠 Trang chủ</div>
+        <div style="text-align:center; margin:15px 0;">
+          <div style="position:relative; display:inline-block; border-radius:20px; overflow:hidden;
+                      box-shadow:0 0 25px gold; border:2px solid rgba(255,215,0,0.5); max-width:400px; width:100%;">
+            <video id="homeVideo" muted loop playsinline style="width:100%; display:block; border-radius:20px;">
+              <source src="trungthu.mp4" type="video/mp4">
+              Trình duyệt của bạn không hỗ trợ video.
+            </video>
+          </div>
+        </div>
+        <p id="welcomeText" class="subtitle"></p>
+        <div class="gift-box">🌕 Chúc em có một mùa Trung Thu vui vẻ và lung linh 🎁</div>
+      </div>
+
+      <!-- Bóc túi mù -->
+      <div id="luckyCard" class="card hidden">
+        <div class="big-title">🎁 Bóc Túi Mù Trung Thu</div>
+        <p class="subtitle">Chọn một chiếc bánh trung thu để xem quà bên trong!</p>
+        <div class="bags" id="bags"></div>
+        <div id="giftText" class="gift-box">Chọn một bánh để nhận quà 🎑</div>
+      </div>
+
+      <!-- Nhận thưởng -->
+      <div id="rewardCard" class="card hidden">
+        <div class="big-title">🏮 Nhận Thưởng Trung Thu</div>
+        <div id="rewardText" class="gift-box">Hãy thử bóc túi mù nhé cục cưng🎑</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CORRECT_USER = "hoàngánh";
+    const CORRECT_PASS = "050424";
+    let robotChecked = false;
+    let opened = [false,false,false,false,false];
+    let openedCount = 0;
+    let rewardList = [];
+    let videoElement = document.getElementById('homeVideo');
+
+    const robotBox = document.getElementById('robotBox');
+    robotBox.addEventListener('click', () => {
+      robotChecked = !robotChecked;
+      robotBox.classList.toggle('checked', robotChecked);
+    });
+
+    const navbar = document.getElementById('navbar');
+    const loginCard = document.getElementById('loginCard');
+    const homeCard = document.getElementById('homeCard');
+    const luckyCard = document.getElementById('luckyCard');
+    const rewardCard = document.getElementById('rewardCard');
+    const errMsg = document.getElementById('errMsg');
+    const bagsContainer = document.getElementById('bags');
+
+    const gifts = [
+      "Đi Ăn Mỳ Kay 🍜",
+      "Được Anh Yêu Hôn 100 Cái 😘",
+      "Tặng Cho Anh Hoàng Lồng Đèn 🏮",
+      "100 Cành 🌸",
+      "Được Đi Chơi 🎡"
+    ];
+
+    function attemptLogin() {
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      if (!robotChecked) return showError("Vui lòng xác minh bạn không phải robot.");
+      if (user === CORRECT_USER && pass === CORRECT_PASS) {
+        loginCard.classList.add('hidden');
+        navbar.style.display = "flex";
+        showHome();
+        document.getElementById('welcomeText').innerHTML = `Chào mừng <strong>${user}</strong>! Hãy cùng khám phá điều bất ngờ 🌕✨`;
+      } else {
+        showError("Sai tên đăng nhập hoặc mật khẩu. Thử lại nhé 💔");
+        document.getElementById('password').value = "";
+      }
+    }
+
+    function showError(txt){ errMsg.classList.remove('hidden'); errMsg.innerText = txt; }
+
+    function hideAll(){
+      [homeCard,luckyCard,rewardCard].forEach(c=>c.classList.add('hidden'));
+      // Dừng video nếu đang phát
+      if (videoElement) videoElement.pause();
+    }
+
+    function showHome(){
+      hideAll();
+      homeCard.classList.remove('hidden');
+      if (videoElement) {
+        videoElement.play().catch(()=>{});
+      }
+    }
+
+    function showLucky(){ hideAll(); luckyCard.classList.remove('hidden'); }
+    function showReward(){ hideAll(); rewardCard.classList.remove('hidden'); }
+
+    // Tạo các bánh
+    gifts.forEach((g,i)=>{
+      const div=document.createElement('div');
+      div.className='bag';
+      div.innerHTML=`<img src="banhtt.png" alt="Bánh Trung Thu">`;
+      div.onclick=()=>openGift(i,div);
+      bagsContainer.appendChild(div);
+    });
+
+    function openGift(index,element){
+      if (openedCount >= 3 && !opened[index]) {
+        document.getElementById('giftText').innerText = "Bạn đã bóc tối đa 3 bánh rồi 🎁";
+        return;
+      }
+      if (opened[index]) {
+        document.getElementById('giftText').innerText = "Bạn đã mở bánh này rồi 🎁";
+        return;
+      }
+      opened[index]=true; openedCount++;
+      element.classList.add('opened');
+      const prize=gifts[index];
+      rewardList.push(prize);
+      showPopup(prize);
+      document.getElementById('giftText').innerText=`Bạn nhận được: ${prize}`;
+      updateRewardSection();
+    }
+
+    function updateRewardSection(){
+      const rewardText=document.getElementById('rewardText');
+      if (rewardList.length===0){
+        rewardText.innerHTML="Bạn chưa có thưởng, hãy thử bóc túi mù nhé 🎑";
+        return;
+      }
+      let html = `
+        <div style="border:2px solid gold; border-radius:12px; background:rgba(255,215,0,0.1); box-shadow:0 0 20px gold; padding:16px;">
+          <div style="font-size:20px; font-weight:700; color:#ffd700; text-align:center; margin-bottom:8px; text-shadow:0 0 10px #ffcc00,0 0 15px #ffa500;">
+            🎁 PHẦN THƯỞNG CỦA BẠN 🎁
+          </div>
+          <ul style="list-style:none; padding:0; margin:0 0 12px 0; text-align:center;">
+      `;
+      rewardList.forEach(item=>{
+        html += `<li style="margin:6px 0; font-size:17px; font-weight:600; color:#fff;">${item}</li>`;
+      });
+      html += `
+          </ul>
+          <div style="margin-top:10px; font-size:18px; font-weight:700; color:#ff4747; text-shadow:0 0 10px #ff0000,0 0 20px #ff5e5e; text-align:center;">
+            💬 Liên hệ <span style="color:#ffeb3b; font-weight:800;">Huy Hoàng</span> để nhận thưởng nhé!
+          </div>
+        </div>
+      `;
+      rewardText.innerHTML=html;
+    }
+
+    function showPopup(prize){
+      const popup=document.createElement('div');
+      popup.className='reward-popup';
+      popup.innerHTML=`
+        <div class="reward-box">
+          <h2>🎉 Bạn nhận được 🎁</h2>
+          <p style="font-size:20px; font-weight:700; margin-top:10px;">${prize}</p>
+          <button onclick="this.closest('.reward-popup').remove()">Đóng</button>
+        </div>`;
+      document.body.appendChild(popup);
+    }
+ // Bật nhạc sau khi đăng nhập và người dùng tương tác
+function enableVideoSound() {
+  const vid = document.getElementById('homeVideo');
+  if (!vid) return;
+
+  // Tắt chế độ im lặng
+  vid.muted = false;
+  vid.play().catch(()=>{});
+
+  // Gỡ bỏ listener sau khi đã bật tiếng
+  document.removeEventListener('click', enableVideoSound);
+  document.removeEventListener('touchstart', enableVideoSound);
+}
+
+// Khi người dùng đăng nhập xong -> thêm event bật nhạc khi chạm/click
+function attemptLogin() {
+  const user = document.getElementById('username').value.trim();
+  const pass = document.getElementById('password').value.trim();
+  if (!robotChecked) return showError("Vui lòng xác minh bạn không phải robot.");
+  if (user === CORRECT_USER && pass === CORRECT_PASS) {
+    loginCard.classList.add('hidden');
+    navbar.style.display = "flex";
+    showHome();
+    document.getElementById('welcomeText').innerHTML =
+      `Chào mừng cục cưng! Hãy cùng khám phá điều bất ngờ 🌕✨`;
+
+    // Thêm listener bật nhạc sau khi đăng nhập
+    document.addEventListener('click', enableVideoSound);
+    document.addEventListener('touchstart', enableVideoSound);
+  } else {
+    showError("Sai tên đăng nhập hoặc mật khẩu. Thử lại nhé 💔");
+    document.getElementById('password').value = "";
+  }
+}
+// 🌕 HIỆU ỨNG ẢNH BAY KHẮP TRANG
+const floatImgs = ["hi.png", "haha.png", "hoang.png", "ánh.png"]; // thêm tên ảnh bạn có sẵn
+function createFloatingImg() {
+  const img = document.createElement("img");
+  img.src = floatImgs[Math.floor(Math.random() * floatImgs.length)];
+  img.className = "floating-img";
+
+  // Vị trí và kích thước ngẫu nhiên
+  img.style.left = Math.random() * window.innerWidth + "px";
+  img.style.bottom = "-80px";
+  const size = 40 + Math.random() * 50;
+  img.style.width = img.style.height = size + "px";
+  img.style.animationDuration = 8 + Math.random() * 6 + "s";
+
+  document.body.appendChild(img);
+
+  // Xóa sau khi bay xong
+  setTimeout(() => img.remove(), parseFloat(img.style.animationDuration) * 1000);
+}
+
+// Tạo ảnh bay liên tục
+setInterval(createFloatingImg, 1200);
+
+ </script>
+</body>
+</html>
