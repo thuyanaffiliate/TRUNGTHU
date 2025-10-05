@@ -4,7 +4,7 @@
   <link rel="icon" type="image/x-icon" href="banhtt.png">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trung Thu 2 TA🎑</title>
+  <title>Trung Thu 2 Ta🎑</title>
   <style>
     :root {
       --bg1: #0f172a;
@@ -314,6 +314,139 @@
     font-size: 14px;
   }
 }
+/* 🌙 Hiệu ứng ảnh bay tròn mềm mại, lung linh */
+.floating-img {
+  position: fixed;
+  width: 35px;
+  height: 35px;
+  pointer-events: none;
+  z-index: 3;
+  animation: floatSoft linear forwards;
+  filter: drop-shadow(0 0 8px gold) drop-shadow(0 0 18px #ffb347);
+  opacity: 0.9;
+  mix-blend-mode: screen;
+  border-radius: 50%;
+  border: 2px solid rgba(255,215,0,0.4);
+  object-fit: cover;           /* ảnh luôn lấp đầy hình tròn */
+  overflow: hidden;            /* đảm bảo cắt tròn hoàn toàn */
+}
+
+/* Lộ trình bay uốn lượn nhẹ */
+@keyframes floatSoft {
+  0% {
+    transform: translate(var(--startX), 0) rotate(0deg);
+    opacity: 0.9;
+  }
+  25% {
+    transform: translate(calc(var(--startX) + 20px), -25vh) rotate(10deg);
+  }
+  50% {
+    transform: translate(calc(var(--startX) - 30px), -55vh) rotate(-10deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(calc(var(--startX) + 10px), -80vh) rotate(8deg);
+  }
+  100% {
+    transform: translate(var(--startX), -120vh) rotate(0deg);
+    opacity: 0;
+  }
+}
+/* Lớp nền chứa hiệu ứng bay */
+#floatLayer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0; /* nằm sau card và navbar */
+}
+
+/* 🌙 Hiệu ứng ảnh bay tròn mềm mại, lung linh */
+.floating-img {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  animation: floatSoft linear forwards;
+  filter: drop-shadow(0 0 8px gold) drop-shadow(0 0 18px #ffb347);
+  opacity: 0.9;
+  mix-blend-mode: screen;
+  border-radius: 50%;
+  border: 2px solid rgba(255,215,0,0.4);
+  object-fit: cover;
+  overflow: hidden;
+}
+
+/* Đường bay uốn lượn nhẹ */
+@keyframes floatSoft {
+  0% {
+    transform: translate(var(--startX), 0) rotate(0deg);
+    opacity: 0.9;
+  }
+  25% {
+    transform: translate(calc(var(--startX) + 20px), -25vh) rotate(10deg);
+  }
+  50% {
+    transform: translate(calc(var(--startX) - 30px), -55vh) rotate(-10deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(calc(var(--startX) + 10px), -80vh) rotate(8deg);
+  }
+  100% {
+    transform: translate(var(--startX), -120vh) rotate(0deg);
+    opacity: 0;
+  }
+}
+/* Đảm bảo hiệu ứng bay nằm dưới nội dung */
+#floatLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 0; /* nền bay */
+}
+
+/* Đặt toàn bộ nội dung trên hiệu ứng bay */
+.page, .navbar, .card {
+  position: relative;
+  z-index: 5; /* cao hơn hiệu ứng bay */
+}
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* 👁️ Biểu tượng con mắt */
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-48%); /* căn giữa chính xác hơn */
+  font-size: 20px;
+  line-height: 1;
+  color: gold;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+  filter: drop-shadow(0 0 4px gold);
+}
+
+.eye-icon:hover {
+  transform: translateY(-48%) scale(1.15);
+  opacity: 0.85;
+  filter: drop-shadow(0 0 8px #ffcc00);
+}
+.floating-img {
+  animation: floatSoft linear forwards, fadeGlow ease-in-out infinite alternate;
+}
+
+/* hiệu ứng sáng mờ nhẹ */
+@keyframes fadeGlow {
+  from { opacity: 0.6; filter: drop-shadow(0 0 5px gold) drop-shadow(0 0 12px #ffb347); }
+  to { opacity: 1; filter: drop-shadow(0 0 12px gold) drop-shadow(0 0 25px #ffcc33); }
+}
 
   </style>
 </head>
@@ -329,9 +462,12 @@
       <!-- Đăng nhập -->
       <div id="loginCard" class="card">
         <h1>🌕 Đăng Nhập Để Vào Thế Giới Này</h1>
-        <div class="subtitle">Nhập đúng tài khoản để tham gia sự kiện</div>
+        <div class="subtitle">Nhập đúng sự đáng yêu để vào thế giới hihi!</div>
         <input id="username" class="input" placeholder="Tên đăng nhập" />
-        <input id="password" type="password" class="input" placeholder="Mật khẩu" />
+        <div class="password-wrapper">
+       <input id="password" type="password" class="input" placeholder="Mật khẩu" />
+      <span id="togglePass" class="eye-icon">👁️</span>
+     </div>
 
         <div class="check-wrap">
           <div id="robotBox" class="check">
@@ -346,7 +482,7 @@
         <div id="errMsg" class="msg hidden"></div>
            <div class="gift-box" style="margin-top:16px;">
           <div style="font-weight:700; color:var(--accent1); margin-bottom:6px;">Gợi ý ✨</div>
-          <div class="hint">🌸 Tên đăng nhập: người đặc biệt trong tim anh<br>🌙 Mật khẩu: ngày kỷ niệm của đôi mình</div>
+          <div class="hint">🌸 Tên đăng nhập: đôi ta<br>🌙 Mật khẩu: ngày kỷ niệm của đôi mình</div>
         </div>
       </div>
 
@@ -381,6 +517,8 @@
       </div>
     </div>
   </div>
+    <!-- Lớp nền riêng cho hiệu ứng bay -->
+   <div id="floatLayer"></div>
 
   <script>
     const CORRECT_USER = "hoàngánh";
@@ -545,28 +683,44 @@ function attemptLogin() {
     document.getElementById('password').value = "";
   }
 }
-// 🌕 HIỆU ỨNG ẢNH BAY KHẮP TRANG
-const floatImgs = ["hi.png", "haha.png", "hoang.png", "ánh.png"]; // thêm tên ảnh bạn có sẵn
-function createFloatingImg() {
-  const img = document.createElement("img");
-  img.src = floatImgs[Math.floor(Math.random() * floatImgs.length)];
-  img.className = "floating-img";
+// 🌕 HIỆU ỨNG ẢNH BAY MỀM MẠI - CHỈ BAY Ở NỀN NGOÀI
+document.addEventListener("DOMContentLoaded", () => {
+  const floatImgs = ["hi.png", "haha.png", "hoang.png", "ánh.png"];
+  const floatLayer = document.getElementById("floatLayer");
 
-  // Vị trí và kích thước ngẫu nhiên
-  img.style.left = Math.random() * window.innerWidth + "px";
-  img.style.bottom = "-80px";
-  const size = 40 + Math.random() * 50;
-  img.style.width = img.style.height = size + "px";
-  img.style.animationDuration = 8 + Math.random() * 6 + "s";
+  function createFloatingImg() {
+    const img = document.createElement("img");
+    img.src = floatImgs[Math.floor(Math.random() * floatImgs.length)];
+    img.className = "floating-img";
 
-  document.body.appendChild(img);
+    // Kích thước và vị trí ngẫu nhiên
+    const size = 30 + Math.random() * 25;
+    img.style.width = img.style.height = `${size}px`;
+    img.style.left = Math.random() * window.innerWidth + "px";
+    img.style.bottom = "-100px";
 
-  // Xóa sau khi bay xong
-  setTimeout(() => img.remove(), parseFloat(img.style.animationDuration) * 1000);
-}
+    // Biến CSS cho đường bay ngẫu nhiên
+    img.style.setProperty("--startX", Math.random() * window.innerWidth + "px");
+    img.style.animationDuration = 10 + Math.random() * 6 + "s";
 
-// Tạo ảnh bay liên tục
-setInterval(createFloatingImg, 1200);
+    floatLayer.appendChild(img);
+
+    // Xóa khi bay xong
+    setTimeout(() => img.remove(), parseFloat(img.style.animationDuration) * 1000);
+  }
+
+  // Tạo ảnh bay liên tục
+  setInterval(createFloatingImg, 1500);
+});
+// 👁️ Toggle hiện / ẩn mật khẩu
+const togglePass = document.getElementById("togglePass");
+const passwordInput = document.getElementById("password");
+
+togglePass.addEventListener("click", () => {
+  const isHidden = passwordInput.type === "password";
+  passwordInput.type = isHidden ? "text" : "password";
+  togglePass.textContent = isHidden ? "🙈" : "👁️"; // đổi biểu tượng
+});
 
  </script>
 </body>
