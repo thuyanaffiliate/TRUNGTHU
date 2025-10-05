@@ -553,7 +553,7 @@
 window.addEventListener("load", () => {
   if (document.getElementById("bags")) renderBags();
 });
-
+let shuffledGifts = []; // 🟡 lưu danh sách quà sau khi xáo
 
     function attemptLogin() {
       const user = document.getElementById('username').value.trim();
@@ -591,9 +591,7 @@ window.addEventListener("load", () => {
   luckyCard.classList.remove('hidden');
   renderBags(); // 👉 tự động xáo trộn mỗi khi mở trang
 }
-
-    function showReward(){ hideAll(); rewardCard.classList.remove('hidden'); }
-
+ function showReward(){ hideAll(); rewardCard.classList.remove('hidden'); }
 // 🔄 Hàm tạo túi mù (bánh) với xáo trộn ngẫu nhiên
 function renderBags() {
   const bagsContainer = document.getElementById("bags");
@@ -603,7 +601,7 @@ function renderBags() {
   bagsContainer.innerHTML = "";
 
   // Xáo trộn danh sách bánh
-  const shuffledGifts = [...gifts].sort(() => Math.random() - 0.5);
+  shuffledGifts = [...gifts].sort(() => Math.random() - 0.5);
 
   shuffledGifts.forEach((g, i) => {
     const div = document.createElement("div");
@@ -618,7 +616,6 @@ function renderBags() {
   openedCount = 0;
   document.getElementById("giftText").innerText = "Chọn một bánh để nhận quà 🎑";
 }
-
     function openGift(index,element){
       if (openedCount >= 3 && !opened[index]) {
         document.getElementById('giftText').innerText = "Bạn đã bóc tối đa 3 bánh rồi 🎁";
@@ -630,7 +627,7 @@ function renderBags() {
       }
       opened[index]=true; openedCount++;
       element.classList.add('opened');
-      const prize=gifts[index];
+      const prize = shuffledGifts[index];
       rewardList.push(prize);
       showPopup(prize);
       document.getElementById('giftText').innerText=`Bạn nhận được: ${prize}`;
